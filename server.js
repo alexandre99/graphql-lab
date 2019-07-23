@@ -18,10 +18,13 @@ const Clientes = new Operacoes('cliente')
 const resolvers = {
   Query: {
     status: () => 'Servidor rodando',
-    clientes: () => Clientes.lista()
+    clientes: () => Clientes.lista(),
+    cliente: (root, { id }) => Clientes.buscaPorId(id)
   },
   Mutation: {
-    adicionarCliente: (root, params) => Clientes.adiciona(params)
+    adicionarCliente: (root, params) => Clientes.adiciona(params),
+    atualizarCliente: (root, params) => Clientes.atualiza(params),
+    deletarCliente: (root, { id }) => Clientes.deleta(id)
   }
 }
 const servidor = new GraphQLServer({

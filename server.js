@@ -35,6 +35,7 @@ const resolvers = {
     deletarPet: (root, { id }) => Pets.deleta(id),
   }
 }
+
 const servidor = new GraphQLServer({
   resolvers,
   typeDefs: './schema.graphql'

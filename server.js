@@ -15,6 +15,7 @@ conexao.connect(erro => {
 
 const Clientes = new Operacoes('cliente')
 const Pets = new Operacoes('pet')
+const Servicos = new Operacoes('servico')
 
 const resolvers = {
   Query: {
@@ -23,7 +24,10 @@ const resolvers = {
     cliente: (root, { id }) => Clientes.buscaPorId(id),
 
     pets: () => Pets.lista(),
-    pet: (root, { id }) => Pets.buscaPorId(id)
+    pet: (root, { id }) => Pets.buscaPorId(id),
+
+    servicos: () => Servicos.lista(),
+    servico: (root, { id }) => Servicos.buscaPorId(id)
   },
   Mutation: {
     adicionarCliente: (root, params) => Clientes.adiciona(params),
@@ -33,6 +37,10 @@ const resolvers = {
     adicionarPet: (root, params) => Pets.adiciona(params),
     atualizarPet: (root, params) => Pets.atualiza(params),
     deletarPet: (root, { id }) => Pets.deleta(id),
+
+    adicionarServico: (root, params) => Servicos.adiciona(params),
+    atualizarServico: (root, params) => Servicos.atualiza(params),
+    deletarServico: (root, { id }) => Servicos.deleta(id)
   }
 }
 

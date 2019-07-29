@@ -1,7 +1,7 @@
 {
   "name": "agenda-petshop",
   "version": "1.0.0",
-  "description": "Projeto para curso de nodeJS e GraphQL",
+  "description": "Projeto GraphQL lab",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
@@ -9,9 +9,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/juunegreiros/agenda-petshop.git"
+    "url": "git+https://github.com/alexandre99/graphql-lab.git"
   },
-  "author": "Juliana Negreiros",
+  "author": "Alexandre Teixeira",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/juunegreiros/agenda-petshop/issues"

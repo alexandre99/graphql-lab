@@ -16,6 +16,7 @@ conexao.connect(erro => {
 const Clientes = new Operacoes('cliente')
 const Pets = new Operacoes('pet')
 const Servicos = new Operacoes('servico')
+const Atendimentos = new Operacoes('atendimento')
 
 const resolvers = {
   Query: {
@@ -40,7 +41,11 @@ const resolvers = {
 
     adicionarServico: (root, params) => Servicos.adiciona(params),
     atualizarServico: (root, params) => Servicos.atualiza(params),
-    deletarServico: (root, { id }) => Servicos.deleta(id)
+    deletarServico: (root, { id }) => Servicos.deleta(id),
+
+    adicionarAtendimento: (root, params) => Atendimentos.adiciona(params),
+    atualizarAtendimento: (root, params) => Atendimentos.atualiza(params),
+    deletarAtendimento: (root, { id }) => Atendimentos.deleta(id)
   }
 }
 

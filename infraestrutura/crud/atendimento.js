@@ -71,12 +71,27 @@ class Atendimento {
   }
 
   atualiza(item) {
-    const {id, cliente, pet, servico, status, observacoes } = item
+    const { id, cliente, pet, servico, status, observacoes } = item
     const data = toDateTimeMysql()
 
-    const sql = `UPDATE Atendimentos SET clienteId=${cliente}, petId=${pet}, servicoId=${servico}, data='${data}', status='${status}', observacoes='${observacoes}' WHERE id=${id}`
+    const sql = `UPDATE Atendimentos SET clienteId=${cliente}, petId=${pet}, servicoId=${servico}, data='${data}', status='${status}', observacoes='${observacoes}' WHERE id=${id};
+                  SELECT * FROM Clientes WHERE id=${cliente};
+                  SELECT * FROM Pets WHERE id=${pet};
+                  SELECT * FROM Servicos WHERE id=${servico};`
 
-    return executaQuery(sql).then(resposta => resposta.insertId)
+    return executaQuery(sql).then(dados => {
+      console.log(dados)
+      const cliente = dados[1][0]
+      const pet = dados[2][0]
+      const servico = dados[3][0]
+      return ({
+        ...item,
+        data,
+        cliente,
+        pet,
+        servico
+      })
+    })
   }
 
   deleta(id) {

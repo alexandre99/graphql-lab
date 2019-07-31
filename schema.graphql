@@ -46,7 +46,7 @@ type Mutation {
     deletarServico(id: ID!): ID!
 
     adicionarAtendimento(cliente: Int!, pet: Int!, servico: Int!, status: String!, observacoes: String): ID!
-    atualizarAtendimento(id: ID!, cliente: Int!, pet: Int!, servico: Int!, status: String!, observacoes: String): ID!
+    atualizarAtendimento(id: ID!, cliente: Int!, pet: Int!, servico: Int!, status: String!, observacoes: String): Atendimento!
     deletarAtendimento(id: ID!): ID!
 }
 

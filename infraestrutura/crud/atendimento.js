@@ -9,9 +9,56 @@ class Atendimento {
   }
 
   buscaPorId(id) {
-    const sql = `SELECT * FROM Atendimentos WHERE id=${parseInt(id)}`
+    const sql = `SELECT
+                  a.id,
+                  a.data,
+                  a.status,
+                  a.observacoes,
+                  c.id as donoId,  
+                  c.nome as donoNome, 
+                  c.cpf as donoCpf,
+                  p.id as petId,
+                  p.nome as petNome,
+                  p.tipo as petTipo,
+                  p.observacoes as petObservacoes,
+                  s.id as servicoId,
+                  s.nome as servicoNome,
+                  s.descricao as servicoDescricao,
+                  s.preco as servicoPreco
+                FROM
+                  Atendimentos a
+                INNER JOIN
+                  Clientes c ON a.clienteId = c.id
+                INNER JOIN
+                  Pets p on a.petId = p.id
+                INNER JOIN
+                  Servicos s on a.servicoId = s.id
+                WHERE
+                  a.id=${parseInt(id)}`
 
-    executaQuery(sql)
+    return executaQuery(sql).then(atendimentos => ({
+      id: atendimentos[0].id,
+      data: atendimentos[0].data,
+      status: atendimentos[0].status,
+      observacoes: atendimentos[0].observacoes,
+      cliente: {
+        id: atendimentos[0].donoId,
+        nome: atendimentos[0].donoNome,
+        cpf: atendimentos[0].donoCpf
+      },
+      pet: {
+        id: atendimentos[0].petId,
+        nome: atendimentos[0].petNome,
+        tipo: atendimentos[0].petTipo,
+        observacoes: atendimentos[0].petObservacoes
+      },
+      servico: {
+        id: atendimentos[0].servicoId,
+        nome: atendimentos[0].servicoNome,
+        descricao: atendimentos[0].servicoDescricao,
+        preco: atendimentos[0].servicoPreco
+      }
+    }))
   }
 
   adiciona(item) {

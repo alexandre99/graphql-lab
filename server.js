@@ -30,7 +30,8 @@ const resolvers = {
     servicos: () => Servicos.lista(),
     servico: (root, { id }) => Servicos.buscaPorId(id),
 
-    atendimento: (root, { id }) => Atendimentos.buscaPorId(id)
+    atendimento: (root, { id }) => Atendimentos.buscaPorId(id),
+    atendimentos: () => Atendimentos.lista()
   },
   Mutation: {
     adicionarCliente: (root, params) => Clientes.adiciona(params),

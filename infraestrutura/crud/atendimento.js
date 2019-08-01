@@ -2,39 +2,65 @@ const executaQuery = require('../database/queries')
 const { toDateTimeMysql } = require('../../utils/dateutils')
 
 class Atendimento {
-  lista() {
-    const sql = 'SELECT * FROM Atendimentos'
 
-    executaQuery(sql)
+  constructor() {
+    this.sqlBuscaTodosAtendimentosComJoin = `SELECT
+                                              a.id,
+                                              a.data,
+                                              a.status,
+                                              a.observacoes,
+                                              c.id as donoId,  
+                                              c.nome as donoNome, 
+                                              c.cpf as donoCpf,
+                                              p.id as petId,
+                                              p.nome as petNome,
+                                              p.tipo as petTipo,
+                                              p.observacoes as petObservacoes,
+                                              s.id as servicoId,
+                                              s.nome as servicoNome,
+                                              s.descricao as servicoDescricao,
+                                              s.preco as servicoPreco
+                                            FROM
+                                              Atendimentos a
+                                            INNER JOIN
+                                              Clientes c ON a.clienteId = c.id
+                                            INNER JOIN
+                                              Pets p on a.petId = p.id
+                                            INNER JOIN
+                                              Servicos s on a.servicoId = s.id`
+  }
+
+  lista() {
+    const sql = this.sqlBuscaTodosAtendimentosComJoin
+
+    return executaQuery(sql).then(atendimentos =>
+      atendimentos.map(atendimento => ({
+        id: atendimento.id,
+        data: atendimento.data,
+        status: atendimento.status,
+        observacoes: atendimento.observacoes,
+        cliente: {
+          id: atendimento.donoId,
+          nome: atendimento.donoNome,
+          cpf: atendimento.donoCpf
+        },
+        pet: {
+          id: atendimento.petId,
+          nome: atendimento.petNome,
+          tipo: atendimento.petTipo,
+          observacoes: atendimento.petObservacoes
+        },
+        servico: {
+          id: atendimento.servicoId,
+          nome: atendimento.servicoNome,
+          descricao: atendimento.servicoDescricao,
+          preco: atendimento.servicoPreco
+        }
+      })))
   }
 
   buscaPorId(id) {
-    const sql = `SELECT
-                  a.id,
-                  a.data,
-                  a.status,
-                  a.observacoes,
-                  c.id as donoId,  
-                  c.nome as donoNome, 
-                  c.cpf as donoCpf,
-                  p.id as petId,
-                  p.nome as petNome,
-                  p.tipo as petTipo,
-                  p.observacoes as petObservacoes,
-                  s.id as servicoId,
-                  s.nome as servicoNome,
-                  s.descricao as servicoDescricao,
-                  s.preco as servicoPreco
-                FROM
-                  Atendimentos a
-                INNER JOIN
-                  Clientes c ON a.clienteId = c.id
-                INNER JOIN
-                  Pets p on a.petId = p.id
-                INNER JOIN
-                  Servicos s on a.servicoId = s.id
-                WHERE
-                  a.id=${parseInt(id)}`
+    const sql = `${this.sqlBuscaTodosAtendimentosComJoin} WHERE a.id=${parseInt(id)}`
 
     return executaQuery(sql).then(atendimentos => {
       if (atendimentos[0]) {
@@ -108,6 +134,7 @@ class Atendimento {
 
     return executaQuery(sql).then(() => id)
   }
+
 }
 
 module.exports = new Atendimento

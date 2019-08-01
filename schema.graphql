@@ -4,7 +4,7 @@ type Cliente {
    id: ID!     
    nome: String!
    cpf:  String!
-   pets: [Pet!]
+   pets: [Pet]
 }
 
 type Pet {
@@ -53,14 +53,15 @@ type Mutation {
 type Query {
     status: String! 
     
-    clientes: [Cliente!]
+    clientes: [Cliente]
     cliente(id: ID!): Cliente
 
     pets: [Pet!]
     pet(id: ID!): Pet
 
-    servicos: [Servico!]
+    servicos: [Servico]
     servico(id: ID!): Servico
 
     atendimento(id: ID!): Atendimento
+    atendimentos: [Atendimento]
 }

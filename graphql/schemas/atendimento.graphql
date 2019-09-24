@@ -1,0 +1,22 @@
+scalar DateTime
+
+type Atendimento {
+   id: ID!
+   cliente: Cliente!
+   pet: Pet!
+   servico: Servico!
+   data: DateTime!
+   status: String!
+   observacoes: String
+}
+
+type Mutation {
+    adicionarAtendimento(cliente: Int!, pet: Int!, servico: Int!, status: String!, observacoes: String): Atendimento!
+    atualizarAtendimento(id: ID!, cliente: Int!, pet: Int!, servico: Int!, status: String!, observacoes: String): Atendimento!
+    deletarAtendimento(id: ID!): ID!
+}
+
+type Query {
+    atendimento(id: ID!): Atendimento
+    atendimentos: [Atendimento]
+}

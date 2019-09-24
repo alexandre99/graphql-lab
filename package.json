@@ -13,16 +13,13 @@
   },
   "author": "Alexandre Teixeira",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/juunegreiros/agenda-petshop/issues"
-  },
-  "homepage": "https://github.com/juunegreiros/agenda-petshop#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "consign": "^0.1.6",
     "cors": "^2.8.5",
     "express": "^4.17.0",
     "express-validator": "^5.3.1",
+    "graphql-yoga": "^1.18.3",
     "morgan": "^1.9.1",
     "mysql": "^2.17.1",
     "nodemon": "^1.19.0"
